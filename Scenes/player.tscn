@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Standing.tres" type="Animation" id=1]
+[ext_resource path="res://Scripts/player.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/score.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/metalfrog_shooting_-Sheet.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 30.9032, 92.1715 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Shooting"
+step = 0.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1.49012e-08, 0.12, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 0 ]
+}
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+collision_layer = 9
+collision_mask = 9
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -7.28171, -24.6423 )
+scale = Vector2( 1.5, 1.91055 )
+texture = ExtResource( 4 )
+centered = false
+hframes = 3
+
+[node name="Shoot" type="Position2D" parent="Sprite"]
+position = Vector2( 77.151, 27.3051 )
+
+[node name="Shoot2" type="Position2D" parent="Sprite"]
+position = Vector2( 78.1142, 6.2592 )
+
+[node name="Shoot3" type="Position2D" parent="Sprite"]
+position = Vector2( 96.5492, -9.0205 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 62.0395, 66.4389 )
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 31.3007, 31.8443 )
+current = true
+limit_left = 0
+limit_top = 0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 58.7724, 66.1701 )
+scale = Vector2( 2.74717, 9.26003 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Score" type="Label" parent="."]
+anchor_left = 5.0
+anchor_top = 5.0
+anchor_right = 5.0
+anchor_bottom = 5.0
+margin_left = -16.0
+margin_top = -128.0
+margin_right = 22.0
+margin_bottom = -110.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+anims/Shooting = SubResource( 2 )
+anims/Standing = ExtResource( 1 )
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
