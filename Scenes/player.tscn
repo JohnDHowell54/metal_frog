@@ -48,12 +48,9 @@ position = Vector2( 78.1142, 6.2592 )
 [node name="Shoot3" type="Position2D" parent="Sprite"]
 position = Vector2( 96.5492, -9.0205 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 62.0395, 66.4389 )
-shape = SubResource( 1 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 31.3007, 31.8443 )
+[node name="Camera2D" type="Camera2D" parent="Sprite"]
+position = Vector2( 25.7216, 29.5656 )
+scale = Vector2( 0.666667, 0.523409 )
 current = true
 limit_left = 0
 limit_top = 0
@@ -61,25 +58,32 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="UI" type="HBoxContainer" parent="Sprite/Camera2D"]
+margin_left = -3.58798
+margin_top = -120.116
+margin_right = 59.412
+margin_bottom = -91.1162
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="Sprite/Camera2D/UI"]
+margin_top = 7.0
+margin_bottom = 21.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 62.0395, 66.4389 )
+shape = SubResource( 1 )
+
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( 58.7724, 66.1701 )
 scale = Vector2( 2.74717, 9.26003 )
 __meta__ = {
 "_edit_lock_": true
-}
-
-[node name="Score" type="Label" parent="."]
-anchor_left = 5.0
-anchor_top = 5.0
-anchor_right = 5.0
-anchor_bottom = 5.0
-margin_left = -16.0
-margin_top = -128.0
-margin_right = 22.0
-margin_bottom = -110.0
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
 }
 
 [node name="Animation" type="AnimationPlayer" parent="."]

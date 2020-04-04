@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/duckenemy.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 24, 48 )
+extents = Vector2( 47.402, 95.9222 )
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 360.0
@@ -19,10 +19,8 @@ texture = ExtResource( 1 )
 position = Vector2( 32, -8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.681137, -0.681122 )
 shape = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="player_detect" type="Area2D" parent="."]
 __meta__ = {
@@ -30,6 +28,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_detect"]
+visible = false
 shape = SubResource( 2 )
 [connection signal="area_entered" from="player_detect" to="." method="_on_player_detect_area_entered"]
 [connection signal="body_entered" from="player_detect" to="." method="_on_player_detect_body_entered"]
