@@ -12,6 +12,7 @@ onready var sprite = $Sprite
 var facing = "right"
 var defspr = preload("res://Sprites/metalfrog_shooting_-Sheet.png")
 
+
 #Shooting vars
 var Bullet = preload("res://Scenes/bullet.tscn")
 var can_fire = true

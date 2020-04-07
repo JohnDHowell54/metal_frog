@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/enemy.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 67.0866, 73.7794 )
+extents = Vector2( 67.0866, 97.0558 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 67.6968, 68.6217 )
@@ -26,13 +26,13 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 95.0553, 92.2564 )
+position = Vector2( 96.3757, 94.8972 )
 shape = SubResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 95.0168, 94.9214 )
+position = Vector2( 96.3372, 95.8017 )
 shape = SubResource( 2 )
 
 [node name="player_detect" type="Area2D" parent="."]
