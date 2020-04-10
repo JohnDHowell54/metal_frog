@@ -1,11 +1,13 @@
 extends KinematicBody2D
 
 #Movement vars
-export (int) var speed = 1000
+export (int) var speed = 2500
 export (int) var jump_speed = -1200
 export (int) var grav = 4000
 export (int) var jump_counter = 0
 var velocity = Vector2.ZERO
+export (float, 0, 1.0) var friction = 0.1
+export (float, 0, 1.0) var acceleration = 0.25
 
 #General preloads and vars
 onready var sprite = $Sprite
@@ -22,17 +24,24 @@ var ammo = 0
 
 #Main input func
 func get_input():
+	var dir = 0
 	velocity.x = 0
 	if Input.is_action_pressed("move_left"):
-		velocity.x -= speed
+		dir -= 1
+		#velocity.x -= speed
 		facing = "left"
 	if Input.is_action_pressed("move_right"):
-		velocity.x += speed
+		dir += 1
+		#velocity.x += speed
 		facing = "right"
 	if Input.is_action_pressed("shoot") and can_fire == true:
 		can_fire = false
 		shoot(weapon)
 		ammo -= 1
+	if dir != 0:
+		velocity.x = lerp(velocity.x, dir * speed, acceleration)
+	else:
+		velocity.x = lerp(velocity.x, 0, friction)
 
 
 func _physics_process(delta):

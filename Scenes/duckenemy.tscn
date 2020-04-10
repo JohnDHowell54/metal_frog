@@ -9,7 +9,7 @@ extents = Vector2( 47.402, 95.9222 )
 [sub_resource type="CircleShape2D" id=2]
 radius = 360.0
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="duckenemy" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
