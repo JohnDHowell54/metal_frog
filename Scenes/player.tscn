@@ -45,16 +45,15 @@ scale = Vector2( 1.5, 1.91055 )
 texture = ExtResource( 4 )
 vframes = 9
 hframes = 3
-frame = 18
 
 [node name="Shoot" type="Position2D" parent="Sprite"]
-position = Vector2( 26.4328, -14.3012 )
+position = Vector2( 19.0358, -22.2483 )
 
 [node name="Shoot2" type="Position2D" parent="Sprite"]
-position = Vector2( 27.396, -35.3471 )
+position = Vector2( 26.4227, -42.8357 )
 
 [node name="Shoot_diag" type="Position2D" parent="Sprite"]
-position = Vector2( 21.9319, -27.7353 )
+position = Vector2( 17.8441, -32.9315 )
 
 [node name="Camera2D" type="Camera2D" parent="Sprite"]
 position = Vector2( 25.7216, 29.5656 )

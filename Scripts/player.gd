@@ -41,15 +41,16 @@ func get_input():
 		facing = "right"
 		state = states.RUNNING
 	if Input.is_action_just_pressed("diag"):
-		if !diag:
+		if diag:
+			state = states.IDLE
+			diag = false
+		elif !diag:
 			state = states.DIAG
 			diag = true
-		if diag && diag_shoot:
-			state = states.RUNNING_SHOOTING_DIAG
-		if diag && !diag_shoot:
+		elif !diag && !diag_shoot:
 			state = states.IDLE
 		# Makes sure we use the right shoot position2d
-		if shoot == "Sprite/Shoot":
+		elif shoot == "Sprite/Shoot":
 			shoot = "Sprite/Shoot_diag"
 			diag = true
 		else:
@@ -65,7 +66,7 @@ func get_input():
 		can_fire = false
 		if !diag:
 			state = states.SHOOTING
-		else:
+		if diag:
 			state = states.SHOOTING_DIAG
 		shoot(weapon)
 		ammo -= 1
@@ -73,8 +74,8 @@ func get_input():
 		velocity.x = lerp(velocity.x, dir * speed, acceleration)
 	else:
 		velocity.x = lerp(velocity.x, 0, friction)
-	#if dir == 0 && state != (states.SHOOTING | states.DIAG):
-	#	state = states.IDLE
+	if dir == 0 && !diag:
+		state = states.IDLE
 
 
 func _physics_process(delta):
@@ -95,7 +96,7 @@ func _physics_process(delta):
 		sprite.scale.x = -1
 	if facing == "right":
 		sprite.scale.x = 1
-	print(state)
+	
 func shoot(wep):
 	weapon = wep
 	can_fire = false
@@ -133,7 +134,8 @@ func shoot(wep):
 			ammo = ammo - 1
 #			if ammo == 0:
 #				set_weapon("pistol", 0.6, defspr)
-	state = states.IDLE
+	if !diag:
+		state = states.IDLE
 
 func hit():
 	get_tree().reload_current_scene()
