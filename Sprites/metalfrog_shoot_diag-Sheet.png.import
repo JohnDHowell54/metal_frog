@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/obstacle.png-76ac2e54e260872af22c3d1fb36fd612.stex"
+path="res://.import/metalfrog_shoot_diag-Sheet.png-0af704df3f90961ef69487a839eeb2b1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/obstacle.png"
-dest_files=[ "res://.import/obstacle.png-76ac2e54e260872af22c3d1fb36fd612.stex" ]
+source_file="res://Sprites/metalfrog_shoot_diag-Sheet.png"
+dest_files=[ "res://.import/metalfrog_shoot_diag-Sheet.png-0af704df3f90961ef69487a839eeb2b1.stex" ]
 
 [params]
 

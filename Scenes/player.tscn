@@ -1,16 +1,23 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Standing.tres" type="Animation" id=1]
+[ext_resource path="res://Scenes/running_animation.tres" type="Animation" id=1]
 [ext_resource path="res://Scripts/player.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/score.gd" type="Script" id=3]
-[ext_resource path="res://Sprites/metalfrog_shooting_-Sheet.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/metalfrog_master_sheet.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/shooting_animation.tres" type="Animation" id=5]
+[ext_resource path="res://Scenes/idle_animation.tres" type="Animation" id=6]
+[ext_resource path="res://Scenes/Diag_Shooting.tres" type="Animation" id=7]
+[ext_resource path="res://Scenes/Diag_Running.tres" type="Animation" id=8]
+[ext_resource path="res://Scenes/Up.tres" type="Animation" id=9]
+[ext_resource path="res://Scenes/Diag.tres" type="Animation" id=10]
+[ext_resource path="res://Scenes/Diag_Runniong_Shooting.tres" type="Animation" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 30.9032, 92.1715 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "Shooting"
-step = 0.0
+resource_name = "Up_Shooting"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -18,10 +25,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1.49012e-08, 0.12, 0.2 ),
+"times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 1, 2, 0 ]
+"values": [ 19, 22, 21 ]
 }
 
 [node name="Player" type="KinematicBody2D"]
@@ -33,20 +40,21 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -7.28171, -24.6423 )
+position = Vector2( 71.7815, 65.2281 )
 scale = Vector2( 1.5, 1.91055 )
 texture = ExtResource( 4 )
-centered = false
+vframes = 9
 hframes = 3
+frame = 18
 
 [node name="Shoot" type="Position2D" parent="Sprite"]
-position = Vector2( 77.151, 27.3051 )
+position = Vector2( 26.4328, -14.3012 )
 
 [node name="Shoot2" type="Position2D" parent="Sprite"]
-position = Vector2( 78.1142, 6.2592 )
+position = Vector2( 27.396, -35.3471 )
 
-[node name="Shoot3" type="Position2D" parent="Sprite"]
-position = Vector2( 96.5492, -9.0205 )
+[node name="Shoot_diag" type="Position2D" parent="Sprite"]
+position = Vector2( 21.9319, -27.7353 )
 
 [node name="Camera2D" type="Camera2D" parent="Sprite"]
 position = Vector2( 25.7216, 29.5656 )
@@ -59,10 +67,11 @@ __meta__ = {
 }
 
 [node name="UI" type="HBoxContainer" parent="Sprite/Camera2D"]
-margin_left = -3.58798
-margin_top = -120.116
-margin_right = 59.412
-margin_bottom = -91.1162
+visible = false
+margin_left = -78.6899
+margin_top = -182.051
+margin_right = -15.6899
+margin_bottom = -153.051
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -74,6 +83,9 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Shoot_up" type="Position2D" parent="Sprite"]
+position = Vector2( -5.549, -52.1139 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 62.0395, 66.4389 )
@@ -87,6 +99,13 @@ __meta__ = {
 }
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-anims/Shooting = SubResource( 2 )
-anims/Standing = ExtResource( 1 )
+anims/Diag = ExtResource( 10 )
+anims/Diag_Running = ExtResource( 8 )
+anims/Diag_Running_Shooting = ExtResource( 11 )
+anims/Diag_Shooting = ExtResource( 7 )
+anims/Idle = ExtResource( 6 )
+anims/Running = ExtResource( 1 )
+anims/Shooting = ExtResource( 5 )
+anims/Up = ExtResource( 9 )
+anims/Up_Shooting = SubResource( 2 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

@@ -2,9 +2,10 @@
 
 [resource]
 resource_name = "Running"
+length = 0.34
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = false
 tracks/0/imported = false
 tracks/0/enabled = true
