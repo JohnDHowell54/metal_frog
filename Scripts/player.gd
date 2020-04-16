@@ -22,8 +22,13 @@ var ammo = 0
 var shoot = "Sprite/Shoot"
 var diag = false
 var diag_shoot = false
-enum states {IDLE, RUNNING, SHOOTING, RUNNING_SHOOTING, DIAG, UP, RUNNING_DIAG, SHOOTING_DIAG, RUNNING_SHOOTING_DIAG }
+var up = false
+var up_shoot = false
+
+enum states {IDLE, RUNNING, SHOOTING, RUNNING_SHOOTING, DIAG, UP, RUNNING_DIAG, SHOOTING_DIAG, RUNNING_SHOOTING_DIAG,
+ RUNNING_UP, SHOOTING_UP, RUNNING_SHOOTING_UP }
 var state = states.IDLE
+
 #Main input func
 func get_input():
 	var dir = 0
@@ -32,25 +37,35 @@ func get_input():
 		dir -= 1
 		if diag:
 			diag_shoot = true
+			state = states.RUNNING_DIAG
+		elif up:
+			state = states.RUNNING_UP
+		else:
+			state = states.RUNNING
 		facing = "left"
-		state = states.RUNNING
 	if Input.is_action_pressed("move_right"):
 		dir += 1
 		if diag:
 			diag_shoot = true
+			state = states.RUNNING_DIAG
+		elif up:
+			state = states.RUNNING_UP
+		else:
+			state = states.RUNNING
 		facing = "right"
-		state = states.RUNNING
 	if Input.is_action_just_pressed("diag"):
+		# Diag is a toggle that lets us go back to idle state so check for it
 		if diag:
 			state = states.IDLE
 			diag = false
 		elif !diag:
 			state = states.DIAG
 			diag = true
+			shoot = "Sprite/Shoot_diag"
 		elif !diag && !diag_shoot:
 			state = states.IDLE
 		# Makes sure we use the right shoot position2d
-		elif shoot == "Sprite/Shoot":
+		elif shoot == "Sprite/Shoot" | shoot == "Sprite/Shoot_up":
 			shoot = "Sprite/Shoot_diag"
 			diag = true
 		else:
@@ -58,24 +73,44 @@ func get_input():
 			diag = false
 
 	if Input.is_action_just_pressed("up"):
-		if !diag:
+#	# Up is a toggle that lets us go back to idle state so check for it
+		if up:
+			state = states.IDLE
+			up = false
+		elif !up:
+			state = states.UP
+			up = true
 			shoot = "Sprite/Shoot_up"
-		if diag:
+		elif !up && !up_shoot:
+			state = states.IDLE
+		# Makes sure we use the right shoot position2d
+		elif shoot == "Sprite/Shoot" | shoot == "Sprite/Shoot_diag":
 			shoot = "Sprite/Shoot_up"
+			up = true
+		else:
+			shoot = "Sprite/Shoot"
+			up = false
+
 	if Input.is_action_pressed("shoot") and can_fire == true:
 		can_fire = false
 		if !diag:
 			state = states.SHOOTING
-		if diag:
+		elif diag:
 			state = states.SHOOTING_DIAG
+		elif diag && diag_shoot:
+			state = states.RUNNING_SHOOTING_DIAG
 		shoot(weapon)
 		ammo -= 1
 	if dir != 0:
 		velocity.x = lerp(velocity.x, dir * speed, acceleration)
 	else:
 		velocity.x = lerp(velocity.x, 0, friction)
-	if dir == 0 && !diag:
+	if dir == 0 && !diag && !up:
 		state = states.IDLE
+	elif dir == 0 && diag && !up:
+		state = states.DIAG
+	elif dir == 0 && !diag && up:
+		state = states.UP
 
 
 func _physics_process(delta):
@@ -103,11 +138,12 @@ func shoot(wep):
 	var bullet = Bullet.instance()
 	var bullet2 = Bullet.instance()
 	var bullet3 = Bullet.instance()
+	print("I'm shooting from: " + shoot)
 	match weapon:
 		"pistol":
 			bullet.position = get_node(shoot).get_global_position()
 			get_parent().add_child(bullet) #Add as child to avoid detecting with self
-			bullet.shoot(facing,diag, false)
+			bullet.shoot(facing,diag, up)
 			yield(get_tree().create_timer(rate_of_fire), "timeout")
 			can_fire = true
 		"machinegun":
@@ -136,6 +172,8 @@ func shoot(wep):
 #				set_weapon("pistol", 0.6, defspr)
 	if !diag:
 		state = states.IDLE
+	elif diag:
+		state = states.DIAG
 
 func hit():
 	get_tree().reload_current_scene()
@@ -159,6 +197,10 @@ func play_animation():
 			$Animation.play("Idle")
 		states.RUNNING:
 			$Animation.play("Running")
+			if diag:
+				state = states.DIAG
+			elif up:
+				state = states.UP
 		states.SHOOTING:
 			$Animation.play("Shooting")
 		states.DIAG:
@@ -169,3 +211,9 @@ func play_animation():
 			$Animation.play("Diag_Shooting")
 		states.RUNNING_SHOOTING_DIAG:
 			$Animation.play("Diag_Running_Shooting")
+		states.UP:
+			$Animation.play("Up")
+		states.RUNNING_UP:
+			$Animation.play("Up_Running")
+		states.RUNNING_SHOOTING_UP:
+			$Animation.play("Up_Running_Shooting")

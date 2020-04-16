@@ -15,12 +15,12 @@ func shoot(dir, diag, up):
 		apply_impulse(Vector2(), Vector2(speed, 0))
 	if dir == "right" && diag:
 		apply_impulse(Vector2(), Vector2(speed,-speed))
-	if dir == "left" && !diag:
+	if dir == "left":
 		apply_impulse(Vector2(), Vector2(-speed, 0))
 	if dir == "left" && diag:
 		apply_impulse(Vector2(), Vector2(-speed, -speed))
 	if up:
-		apply_impulse(Vector2(), Vector2(0, speed))
+		apply_impulse(Vector2(), Vector2(0, -speed))
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
