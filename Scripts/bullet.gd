@@ -8,13 +8,19 @@ func _on_RigidBody2D_body_entered(body):
 		if body.has_method("hit_by_bullet"):
 			body.hit_by_bullet()
 		queue_free()
-	
 
-func shoot(dir):
+
+func shoot(dir, diag, up):
 	if dir == "right":
 		apply_impulse(Vector2(), Vector2(speed, 0))
-	else:
+	if dir == "right" && diag:
+		apply_impulse(Vector2(), Vector2(speed,-speed))
+	if dir == "left":
 		apply_impulse(Vector2(), Vector2(-speed, 0))
+	if dir == "left" && diag:
+		apply_impulse(Vector2(), Vector2(-speed, -speed))
+	if up:
+		apply_impulse(Vector2(), Vector2(0, -speed))
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

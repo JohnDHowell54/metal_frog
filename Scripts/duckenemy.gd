@@ -3,7 +3,7 @@ var speed = 100
 var velocity = Vector2.ZERO
 var player
 var playerName
-var Bullet = preload("res://Scenes/enemy_bullet.tscn")
+var Bullet = preload("res://Scenes/bullet.tscn")
 var facing = "left"
 var rate_of_fire = 0.4
 var can_fire = true

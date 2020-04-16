@@ -5,10 +5,10 @@ var player = null
 var playerName
 var can_fire = true
 var rate_of_fire = 0.5
-var Bullet = preload("res://Scenes/enemy_bullet.tscn")
+var Bullet = preload("res://Scenes/bullet.tscn")
 var facing = "left"
 var hp = 10
-var grav = 30
+var grav = 3000
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Sprite.scale.x = -1
@@ -26,7 +26,8 @@ func _process(delta):
 	chase_player()
 	if playerName == "Player":
 		shoot_at_player()
-	velocity.y = 0
+	#velocity.y = 0
+	velocity.y += grav * delta
 	velocity = move_and_slide(velocity)
 
 func chase_player():
@@ -51,7 +52,7 @@ func shoot_at_player():
 		else:
 			bullet.position = get_node("Sprite/Shoot2").get_global_position()
 		get_parent().add_child(bullet) #Add as child to avoid detecting with self
-		bullet.shoot(facing)
+		bullet.shoot(facing, false,false)
 		yield(get_tree().create_timer(rate_of_fire), "timeout")
 		can_fire = true
 
