@@ -138,7 +138,6 @@ func shoot(wep):
 	var bullet = Bullet.instance()
 	var bullet2 = Bullet.instance()
 	var bullet3 = Bullet.instance()
-	print("I'm shooting from: " + shoot)
 	match weapon:
 		"pistol":
 			bullet.position = get_node(shoot).get_global_position()
