@@ -80,7 +80,7 @@ scale = Vector2( 1.5, 1.91055 )
 texture = ExtResource( 4 )
 vframes = 13
 hframes = 3
-frame = 38
+frame = 30
 
 [node name="Shoot" type="Position2D" parent="Sprite"]
 position = Vector2( 20.2626, -28.0276 )

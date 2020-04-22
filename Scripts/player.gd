@@ -31,7 +31,7 @@ var down_shoot = false
 
 enum states {IDLE, RUNNING, SHOOTING, RUNNING_SHOOTING, DIAG, UP, RUNNING_DIAG, SHOOTING_DIAG, RUNNING_SHOOTING_DIAG,
  RUNNING_UP, SHOOTING_UP, RUNNING_SHOOTING_UP, DOWN_DIAG, 
-DOWN_DIAG_RUNNING, DOWN_DIAG_SHOOTING, DOWN }
+ DOWN_DIAG_RUNNING, DOWN_DIAG_SHOOTING, DOWN }
 var state = states.IDLE
 
 #Main input func
@@ -76,7 +76,6 @@ func get_input():
 		else:
 			shoot = "Sprite/Shoot"
 			diag = false
-
 	if Input.is_action_just_pressed("up"):
 #	# Up is a toggle that lets us go back to idle state so check for it
 		if up:
@@ -95,13 +94,18 @@ func get_input():
 		else:
 			shoot = "Sprite/Shoot"
 			up = false
-	if Input.is_action_pressed("down_diag"):
-		if !down_diag:
-			state = states.DOWN_DIAG
-			down_diag = true
+	if Input.is_action_just_pressed("down_diag"):
+		print("inside down_diag func")
 		if down_diag:
 			state = states.IDLE
+			print("setting down_diag to false")
 			down_diag = false
+		elif !down_diag:
+			state = states.DOWN_DIAG
+			print(state)
+			print("setting down_diag to true")
+			down_diag = true
+
 	if Input.is_action_pressed("shoot") and can_fire == true:
 		can_fire = false
 		if !diag:
@@ -214,6 +218,7 @@ func play_animation():
 		states.SHOOTING:
 			$Animation.play("Shooting")
 		states.DIAG:
+			print("I'm making it to DIAG state")
 			$Animation.play("Diag")
 		states.RUNNING_DIAG:
 			$Animation.play("Diag_Running")
@@ -228,6 +233,7 @@ func play_animation():
 		states.RUNNING_SHOOTING_UP:
 			$Animation.play("Up_Running_Shooting")
 		states.DOWN_DIAG:
+			print("I'm making it to down.diag state")
 			$Animation.play("down_diag")
 		states.DOWN_DIAG_RUNNING:
 			$Animation.play("down_diag_running")
