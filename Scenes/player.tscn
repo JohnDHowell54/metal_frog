@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scenes/running_animation.tres" type="Animation" id=1]
 [ext_resource path="res://Scripts/player.gd" type="Script" id=2]
@@ -11,6 +11,10 @@
 [ext_resource path="res://Scenes/Up.tres" type="Animation" id=9]
 [ext_resource path="res://Scenes/Diag.tres" type="Animation" id=10]
 [ext_resource path="res://Scenes/Diag_Runniong_Shooting.tres" type="Animation" id=11]
+[ext_resource path="res://down_diag_running_shooting.tres" type="Animation" id=12]
+[ext_resource path="res://down_diag_running.tres" type="Animation" id=13]
+[ext_resource path="res://down_diag_shooting.tres" type="Animation" id=14]
+[ext_resource path="res://down_diag.tres" type="Animation" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25.2202, 91.3588 )
@@ -31,7 +35,7 @@ tracks/0/keys = {
 "values": [ 19, 20 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "Up_Running_Shooting"
 length = 0.5
 tracks/0/type = "value"
@@ -47,7 +51,7 @@ tracks/0/keys = {
 "values": [ 24, 25, 26 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -74,8 +78,9 @@ __meta__ = {
 position = Vector2( 71.7815, 65.2281 )
 scale = Vector2( 1.5, 1.91055 )
 texture = ExtResource( 4 )
-vframes = 9
+vframes = 13
 hframes = 3
+frame = 38
 
 [node name="Shoot" type="Position2D" parent="Sprite"]
 position = Vector2( 20.2626, -28.0276 )
@@ -118,6 +123,7 @@ __meta__ = {
 position = Vector2( -4.83203, -64.6854 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 68.4608, 64.7741 )
 shape = SubResource( 1 )
 
@@ -138,6 +144,10 @@ anims/Running = ExtResource( 1 )
 anims/Shooting = ExtResource( 5 )
 anims/Up = ExtResource( 9 )
 anims/Up_Running = SubResource( 2 )
-anims/Up_Running_Shooting = SubResource( 4 )
-anims/Up_Shooting = SubResource( 3 )
+anims/Up_Running_Shooting = SubResource( 3 )
+anims/Up_Shooting = SubResource( 4 )
+anims/down_diag = ExtResource( 15 )
+anims/down_diag_running = ExtResource( 13 )
+anims/down_diag_running_shooting = ExtResource( 12 )
+anims/down_diag_shooting = ExtResource( 14 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

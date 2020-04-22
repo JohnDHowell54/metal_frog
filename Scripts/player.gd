@@ -24,9 +24,14 @@ var diag = false
 var diag_shoot = false
 var up = false
 var up_shoot = false
+var down_diag = false
+var down_diag_shoot = false
+var down = false
+var down_shoot = false
 
 enum states {IDLE, RUNNING, SHOOTING, RUNNING_SHOOTING, DIAG, UP, RUNNING_DIAG, SHOOTING_DIAG, RUNNING_SHOOTING_DIAG,
- RUNNING_UP, SHOOTING_UP, RUNNING_SHOOTING_UP }
+ RUNNING_UP, SHOOTING_UP, RUNNING_SHOOTING_UP, DOWN_DIAG, 
+DOWN_DIAG_RUNNING, DOWN_DIAG_SHOOTING, DOWN }
 var state = states.IDLE
 
 #Main input func
@@ -90,7 +95,13 @@ func get_input():
 		else:
 			shoot = "Sprite/Shoot"
 			up = false
-
+	if Input.is_action_pressed("down_diag"):
+		if !down_diag:
+			state = states.DOWN_DIAG
+			down_diag = true
+		if down_diag:
+			state = states.IDLE
+			down_diag = false
 	if Input.is_action_pressed("shoot") and can_fire == true:
 		can_fire = false
 		if !diag:
@@ -216,3 +227,10 @@ func play_animation():
 			$Animation.play("Up_Running")
 		states.RUNNING_SHOOTING_UP:
 			$Animation.play("Up_Running_Shooting")
+		states.DOWN_DIAG:
+			$Animation.play("down_diag")
+		states.DOWN_DIAG_RUNNING:
+			$Animation.play("down_diag_running")
+		states.DOWN_DIAG_SHOOTING:
+			$Animation.play("down_diag_shooting")
+		
