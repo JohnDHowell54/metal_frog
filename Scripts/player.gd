@@ -98,12 +98,11 @@ func get_input():
 		print("inside down_diag func")
 		if down_diag:
 			state = states.IDLE
-			print("setting down_diag to false")
 			down_diag = false
+			shoot = "Sprite/Shoot_up"
 		elif !down_diag:
 			state = states.DOWN_DIAG
-			print(state)
-			print("setting down_diag to true")
+			shoot = "Sprite/Shoot_down_diag"
 			down_diag = true
 
 	if Input.is_action_pressed("shoot") and can_fire == true:
@@ -120,13 +119,14 @@ func get_input():
 		velocity.x = lerp(velocity.x, dir * speed, acceleration)
 	else:
 		velocity.x = lerp(velocity.x, 0, friction)
-	if dir == 0 && !diag && !up:
+	if dir == 0 && !diag && !up && !down_diag:
 		state = states.IDLE
-	elif dir == 0 && diag && !up:
+	elif dir == 0 && diag && !up && !down_diag:
 		state = states.DIAG
-	elif dir == 0 && !diag && up:
+	elif dir == 0 && !diag && up && !down_diag:
 		state = states.UP
-
+	elif dir == 0 && !diag && !up && down_diag:
+		state = states.DOWN_DIAG
 
 func _physics_process(delta):
 	get_input()

@@ -122,6 +122,9 @@ __meta__ = {
 [node name="Shoot_up" type="Position2D" parent="Sprite"]
 position = Vector2( -4.83203, -64.6854 )
 
+[node name="Shoot_down_diag" type="Position2D" parent="Sprite"]
+position = Vector2( 35.8247, -1.73621 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 68.4608, 64.7741 )
