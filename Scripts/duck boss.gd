@@ -52,7 +52,7 @@ func shoot_at_player():
 		else:
 			bullet.position = get_node("Sprite/Shoot2").get_global_position()
 		get_parent().add_child(bullet) #Add as child to avoid detecting with self
-		bullet.shoot(facing, false,false)
+		bullet.shoot(facing, false,false, false, false)
 		yield(get_tree().create_timer(rate_of_fire), "timeout")
 		can_fire = true
 

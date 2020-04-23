@@ -24,9 +24,14 @@ var diag = false
 var diag_shoot = false
 var up = false
 var up_shoot = false
+var down_diag = false
+var down_diag_shoot = false
+var down = false
+var down_shoot = false
 
 enum states {IDLE, RUNNING, SHOOTING, RUNNING_SHOOTING, DIAG, UP, RUNNING_DIAG, SHOOTING_DIAG, RUNNING_SHOOTING_DIAG,
- RUNNING_UP, SHOOTING_UP, RUNNING_SHOOTING_UP }
+ RUNNING_UP, SHOOTING_UP, RUNNING_SHOOTING_UP, DOWN_DIAG, 
+ DOWN_DIAG_RUNNING, DOWN_DIAG_SHOOTING, DOWN, DOWN_SHOOTING }
 var state = states.IDLE
 
 #Main input func
@@ -40,6 +45,8 @@ func get_input():
 			state = states.RUNNING_DIAG
 		elif up:
 			state = states.RUNNING_UP
+		elif down_diag:
+			state = states.DOWN_DIAG_RUNNING
 		else:
 			state = states.RUNNING
 		facing = "left"
@@ -50,6 +57,8 @@ func get_input():
 			state = states.RUNNING_DIAG
 		elif up:
 			state = states.RUNNING_UP
+		elif down_diag:
+			state = states.DOWN_DIAG_RUNNING
 		else:
 			state = states.RUNNING
 		facing = "right"
@@ -71,7 +80,6 @@ func get_input():
 		else:
 			shoot = "Sprite/Shoot"
 			diag = false
-
 	if Input.is_action_just_pressed("up"):
 #	# Up is a toggle that lets us go back to idle state so check for it
 		if up:
@@ -90,7 +98,25 @@ func get_input():
 		else:
 			shoot = "Sprite/Shoot"
 			up = false
-
+	if Input.is_action_just_pressed("down_diag"):
+		print("inside down_diag func")
+		if down_diag:
+			state = states.IDLE
+			down_diag = false
+			shoot = "Sprite/Shoot"
+		elif !down_diag:
+			state = states.DOWN_DIAG
+			shoot = "Sprite/Shoot_down_diag"
+			down_diag = true
+	if Input.is_action_just_pressed("down"):
+	#	if down || is_on_floor():
+	#		state = states.IDLE
+	#		shoot = "Sprite/Shoot"
+		if !down:
+			print("I'm in the down func")
+			state = states.DOWN
+			down = true
+			shoot = "Sprite/Shoot_down"
 	if Input.is_action_pressed("shoot") and can_fire == true:
 		can_fire = false
 		if !diag:
@@ -99,19 +125,26 @@ func get_input():
 			state = states.SHOOTING_DIAG
 		elif diag && diag_shoot:
 			state = states.RUNNING_SHOOTING_DIAG
+		elif down_diag:
+			state = states.DOWN_DIAG_SHOOTING
+		elif down_diag && down_diag_shoot:
+			state = states.DOWN_SHOOTING
 		shoot(weapon)
 		ammo -= 1
 	if dir != 0:
 		velocity.x = lerp(velocity.x, dir * speed, acceleration)
 	else:
 		velocity.x = lerp(velocity.x, 0, friction)
-	if dir == 0 && !diag && !up:
+	if dir == 0 && !diag && !up && !down_diag && !down:
 		state = states.IDLE
-	elif dir == 0 && diag && !up:
+	elif dir == 0 && diag && !up && !down_diag && !down:
 		state = states.DIAG
-	elif dir == 0 && !diag && up:
+	elif dir == 0 && !diag && up && !down_diag && !down:
 		state = states.UP
-
+	elif dir == 0 && !diag && !up && down_diag && !down:
+		state = states.DOWN_DIAG
+	elif dir == 0 && !diag && !up && !down_diag && down && !is_on_floor():
+		state = states.DOWN
 
 func _physics_process(delta):
 	get_input()
@@ -142,7 +175,7 @@ func shoot(wep):
 		"pistol":
 			bullet.position = get_node(shoot).get_global_position()
 			get_parent().add_child(bullet) #Add as child to avoid detecting with self
-			bullet.shoot(facing,diag, up)
+			bullet.shoot(facing,diag, up, down_diag, down)
 			yield(get_tree().create_timer(rate_of_fire), "timeout")
 			can_fire = true
 		"machinegun":
@@ -200,6 +233,8 @@ func play_animation():
 				state = states.DIAG
 			elif up:
 				state = states.UP
+			elif down_diag:
+				state = states.DOWN_DIAG
 		states.SHOOTING:
 			$Animation.play("Shooting")
 		states.DIAG:
@@ -216,3 +251,16 @@ func play_animation():
 			$Animation.play("Up_Running")
 		states.RUNNING_SHOOTING_UP:
 			$Animation.play("Up_Running_Shooting")
+		states.DOWN_DIAG:
+			$Animation.play("down_diag")
+		states.DOWN_DIAG_RUNNING:
+			$Animation.play("down_diag_running")
+		states.DOWN_DIAG_SHOOTING:
+			$Animation.play("down_diag_shooting")
+		states.DOWN:
+			$Animation.play("Down")
+			if is_on_floor():
+				state = states.IDLE
+		states.DOWN_SHOOTING:
+			$Animation.play("Down_Shooting")
+		

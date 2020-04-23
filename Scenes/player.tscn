@@ -1,22 +1,56 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://Scenes/running_animation.tres" type="Animation" id=1]
+[ext_resource path="res://Animations/running_animation.tres" type="Animation" id=1]
 [ext_resource path="res://Scripts/player.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/score.gd" type="Script" id=3]
 [ext_resource path="res://Sprites/metalfrog_master_sheet.png" type="Texture" id=4]
-[ext_resource path="res://Scenes/shooting_animation.tres" type="Animation" id=5]
-[ext_resource path="res://Scenes/idle_animation.tres" type="Animation" id=6]
-[ext_resource path="res://Scenes/Diag_Shooting.tres" type="Animation" id=7]
-[ext_resource path="res://Scenes/Diag_Running.tres" type="Animation" id=8]
-[ext_resource path="res://Scenes/Up.tres" type="Animation" id=9]
-[ext_resource path="res://Scenes/Diag.tres" type="Animation" id=10]
-[ext_resource path="res://Scenes/Diag_Runniong_Shooting.tres" type="Animation" id=11]
+[ext_resource path="res://Animations/shooting_animation.tres" type="Animation" id=5]
+[ext_resource path="res://Animations/idle_animation.tres" type="Animation" id=6]
+[ext_resource path="res://Animations/Diag_Shooting.tres" type="Animation" id=7]
+[ext_resource path="res://Animations/Diag_Running.tres" type="Animation" id=8]
+[ext_resource path="res://Animations/Up.tres" type="Animation" id=9]
+[ext_resource path="res://Animations/Diag.tres" type="Animation" id=10]
+[ext_resource path="res://Animations/Diag_Runniong_Shooting.tres" type="Animation" id=11]
+[ext_resource path="res://Animations/down_diag_running_shooting.tres" type="Animation" id=12]
+[ext_resource path="res://Animations/down_diag_running.tres" type="Animation" id=13]
+[ext_resource path="res://Animations/down_diag_shooting.tres" type="Animation" id=14]
+[ext_resource path="res://Animations/down_diag.tres" type="Animation" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25.2202, 91.3588 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "Up_Running"
+resource_name = "Down"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 27 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Down_Shooting"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 27, 28, 29 ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -31,8 +65,7 @@ tracks/0/keys = {
 "values": [ 19, 20 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Up_Running_Shooting"
+[sub_resource type="Animation" id=5]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -47,7 +80,7 @@ tracks/0/keys = {
 "values": [ 24, 25, 26 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=6]
 length = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -74,8 +107,9 @@ __meta__ = {
 position = Vector2( 71.7815, 65.2281 )
 scale = Vector2( 1.5, 1.91055 )
 texture = ExtResource( 4 )
-vframes = 9
+vframes = 13
 hframes = 3
+frame = 30
 
 [node name="Shoot" type="Position2D" parent="Sprite"]
 position = Vector2( 20.2626, -28.0276 )
@@ -84,7 +118,7 @@ position = Vector2( 20.2626, -28.0276 )
 position = Vector2( 26.4227, -42.8357 )
 
 [node name="Shoot_diag" type="Position2D" parent="Sprite"]
-position = Vector2( 17.8441, -32.9315 )
+position = Vector2( 22.9667, -35.0229 )
 
 [node name="Camera2D" type="Camera2D" parent="Sprite"]
 position = Vector2( 25.7216, 29.5656 )
@@ -117,7 +151,14 @@ __meta__ = {
 [node name="Shoot_up" type="Position2D" parent="Sprite"]
 position = Vector2( -4.83203, -64.6854 )
 
+[node name="Shoot_down_diag" type="Position2D" parent="Sprite"]
+position = Vector2( 35.8247, -1.73621 )
+
+[node name="Shoot_down" type="Position2D" parent="Sprite"]
+position = Vector2( -4.40126, 50.9108 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 68.4608, 64.7741 )
 shape = SubResource( 1 )
 
@@ -133,11 +174,17 @@ anims/Diag = ExtResource( 10 )
 anims/Diag_Running = ExtResource( 8 )
 anims/Diag_Running_Shooting = ExtResource( 11 )
 anims/Diag_Shooting = ExtResource( 7 )
+anims/Down = SubResource( 2 )
+anims/Down_Shooting = SubResource( 3 )
 anims/Idle = ExtResource( 6 )
 anims/Running = ExtResource( 1 )
 anims/Shooting = ExtResource( 5 )
 anims/Up = ExtResource( 9 )
-anims/Up_Running = SubResource( 2 )
-anims/Up_Running_Shooting = SubResource( 4 )
-anims/Up_Shooting = SubResource( 3 )
+anims/Up_Running = SubResource( 4 )
+anims/Up_Running_Shooting = SubResource( 5 )
+anims/Up_Shooting = SubResource( 6 )
+anims/down_diag = ExtResource( 15 )
+anims/down_diag_running = ExtResource( 13 )
+anims/down_diag_running_shooting = ExtResource( 12 )
+anims/down_diag_shooting = ExtResource( 14 )
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
